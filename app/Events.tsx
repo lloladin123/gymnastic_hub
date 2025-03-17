@@ -42,7 +42,7 @@ const Events: React.FC = () => {
             </div>
 
             <div>
-              <Link href="/CreateEvent">View details</Link>
+              <Link href="#">View details</Link>
             </div>
           </div>
         </div>

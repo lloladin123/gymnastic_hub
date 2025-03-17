@@ -15,18 +15,20 @@ interface PlanningEvent {
   location: string;
 }
 
+const initialInstructorState: Instructor[] = [
+  { id: 1, name: "Alexander" },
+  { id: 2, name: "Lisa" },
+  { id: 3, name: "Noah" },
+  { id: 4, name: "Eliza" },
+  { id: 5, name: "Agnes" },
+  { id: 6, name: "Liv" },
+];
+
 const initialState: PlanningEvent[] = [
   {
     id: 1,
     title: "Springmusene",
-    instructors: [
-      { id: 1, name: "Alexander" },
-      { id: 2, name: "Lisa" },
-      { id: 3, name: "Noah" },
-      { id: 4, name: "Eliza" },
-      { id: 5, name: "Agnes" },
-      { id: 6, name: "Liv" },
-    ],
+    instructors: initialInstructorState.slice(0,6),
     type: "practice",
     description: "bob",
     date: new Date(),
@@ -35,13 +37,7 @@ const initialState: PlanningEvent[] = [
   {
     id: 2,
     title: "Supernovaer",
-    instructors: [
-      { id: 1, name: "Alexander" },
-      { id: 2, name: "Lisa" },
-      { id: 3, name: "Noah" },
-      { id: 4, name: "Eliza" },
-      { id: 5, name: "Agnes" },
-    ],
+    instructors: initialInstructorState.slice(0,5),
     type: "practice",
     description: "bob",
     date: new Date(),
@@ -50,12 +46,7 @@ const initialState: PlanningEvent[] = [
   {
     id: 3,
     title: "Stjerneskud",
-    instructors: [
-      { id: 1, name: "Alexander" },
-      { id: 2, name: "Lisa" },
-      { id: 3, name: "Noah" },
-      { id: 4, name: "Eliza" },
-    ],
+    instructors: initialInstructorState.slice(0,4),
     type: "practice",
     description: "bob",
     date: new Date(),
@@ -64,11 +55,7 @@ const initialState: PlanningEvent[] = [
   {
     id: 4,
     title: "Springmix",
-    instructors: [
-      { id: 1, name: "Alexander" },
-      { id: 2, name: "Lisa" },
-      { id: 3, name: "Noah" },
-    ],
+    instructors: initialInstructorState.slice(0,3),
     type: "practice",
     description: "bob",
     date: new Date(),
@@ -77,10 +64,7 @@ const initialState: PlanningEvent[] = [
   {
     id: 5,
     title: "Power Boys",
-    instructors: [
-      { id: 1, name: "Alexander" },
-      { id: 2, name: "Lisa" },
-    ],
+    instructors: initialInstructorState.slice(0,2),
     type: "practice",
     description: "bob",
     date: new Date(),

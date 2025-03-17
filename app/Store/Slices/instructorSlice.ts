@@ -1,9 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface Instructor {
-  id: number;
-  name: string;
-}
+import { Instructor } from "../../Types/index";
 
 const initialState: Instructor[] = [
   { id: 1, name: "Alexander" },

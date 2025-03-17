@@ -8,7 +8,10 @@ const Header = () => {
     <header className="px-10">
       <div className="flex justify-between items-center py-5">
         <h1 className="text-4xl">Gymnastic Instructor planning tool</h1>
-        <Link className="bg-gray-800 text-white p-2 rounded-md" href="#">
+        <Link
+          className="bg-gray-800 text-white p-2 rounded-md"
+          href="/CreateEvent"
+        >
           Add New Event
         </Link>
       </div>
