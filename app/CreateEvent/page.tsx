@@ -1,5 +1,4 @@
 import React from "react";
-import { Instructor } from "../types";
 
 interface eventType {
   id: number;

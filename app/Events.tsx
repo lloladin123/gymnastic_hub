@@ -3,9 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { Instructor, PlanningEvent } from "./types";
+import { Instructor, PlanningEvent } from "./Types/index";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState, addInstructor } from "./Store/Store";
+import { RootState } from "./Store/Store";
 
 const Events: React.FC = () => {
   const instructors = useSelector((state: RootState) => state.instructors);
