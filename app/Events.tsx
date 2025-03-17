@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { Instructor, PlanningEvent } from "./Types/index";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "./Store/Store";
 

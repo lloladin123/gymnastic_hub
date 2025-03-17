@@ -1,4 +1,3 @@
-import Image from "next/image";
 import PlanningChecklist from "./PlanningChecklist";
 import Events from "./Events";
 
