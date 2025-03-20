@@ -4,8 +4,8 @@ export interface PlanningEvent {
   id: number;
   title: string;
   instructors: Instructor[];
-  type: string;
+  categoryId: number;
   description: string;
   date: Date;
-  location: string;
+  venueId: number;
 }

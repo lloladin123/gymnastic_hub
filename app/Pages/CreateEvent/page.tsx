@@ -2,7 +2,7 @@
 import React from "react";
 import DropdownBox from "./DropdownBox";
 import { useSelector } from "react-redux";
-import { RootState } from "../Store/Store";
+import { RootState } from "../../Store/Store";
 
 interface eventType {
   id: number;

@@ -1,27 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface Instructor {
-  id: number;
-  name: string;
-}
-
-interface PlanningEvent {
-  id: number;
-  title: string;
-  instructors: Instructor[];
-  type: string;
-  description: string;
-  date: Date;
-  location: string;
-}
+import { Instructor } from "../../Types/index";
+import { PlanningEvent } from "../../Types/index";
 
 const initialInstructorState: Instructor[] = [
-  { id: 1, name: "Alexander" },
-  { id: 2, name: "Lisa" },
-  { id: 3, name: "Noah" },
-  { id: 4, name: "Eliza" },
-  { id: 5, name: "Agnes" },
-  { id: 6, name: "Liv" },
+  { id: 1, name: "Alexander", email: "email@bob.dk", address: "address1", phone: 22949292, type: "Instructor" },
+  { id: 2, name: "Lisa", email: "email@bob.dk", address: "address1", phone: 22949292, type: "Instructor" },
+  { id: 3, name: "Noah", email: "email@bob.dk", address: "address1", phone: 22949292, type: "Instructor" },
+  { id: 4, name: "Eliza", email: "email@bob.dk", address: "address1", phone: 22949292, type: "Instructor" },
+  { id: 5, name: "Agnes", email: "email@bob.dk", address: "address1", phone: 22949292, type: "Instructor" },
+  { id: 6, name: "Liv", email: "email@bob.dk", address: "address1", phone: 22949292, type: "Instructor" },
 ];
 
 const initialState: PlanningEvent[] = [
@@ -29,46 +16,46 @@ const initialState: PlanningEvent[] = [
     id: 1,
     title: "Springmusene",
     instructors: initialInstructorState.slice(0,6),
-    type: "practice",
+    categoryId: 1,
     description: "bob",
     date: new Date(),
-    location: "Kildegården 9",
+    venueId: 1,
   },
   {
     id: 2,
     title: "Supernovaer",
     instructors: initialInstructorState.slice(0,5),
-    type: "practice",
+    categoryId: 1,
     description: "bob",
     date: new Date(),
-    location: "Kildegården 9",
+    venueId: 1,
   },
   {
     id: 3,
     title: "Stjerneskud",
     instructors: initialInstructorState.slice(0,4),
-    type: "practice",
+    categoryId: 1,
     description: "bob",
     date: new Date(),
-    location: "Kildegården 9",
+    venueId: 1,
   },
   {
     id: 4,
     title: "Springmix",
     instructors: initialInstructorState.slice(0,3),
-    type: "practice",
+    categoryId: 1,
     description: "bob",
     date: new Date(),
-    location: "Kildegården 9",
+    venueId: 1,
   },
   {
     id: 5,
     title: "Power Boys",
     instructors: initialInstructorState.slice(0,2),
-    type: "practice",
+    categoryId: 1,
     description: "bob",
     date: new Date(),
-    location: "Kildegården 9",
+    venueId: 1,
   },
 ];
 

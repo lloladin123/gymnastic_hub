@@ -7,6 +7,7 @@ const initialState: Venue[] = [
     {id: 3, name: "venue3", address: "address3"}
 ];
 
+
 const venueSlice = createSlice({
   name: "venues",
   initialState,

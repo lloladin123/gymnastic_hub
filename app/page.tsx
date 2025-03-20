@@ -1,5 +1,5 @@
 import PlanningChecklist from "./PlanningChecklist";
-import Events from "./EventList/page";
+import Events from "./Pages/EventList/page";
 
 export default function Home() {
   return (

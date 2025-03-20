@@ -10,7 +10,7 @@ const Header = () => {
         <h1 className="text-4xl">Gymnastic Instructor planning tool</h1>
         <Link
           className="bg-gray-800 text-white p-2 rounded-md"
-          href="/CreateEvent"
+          href="Pages/CreateEvent"
         >
           Add New Event
         </Link>

@@ -1,32 +1,30 @@
 "use client";
 
-import { FaRegCalendar } from "react-icons/fa";
-import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../Store/Store";
+import { RootState } from "../../Store/Store";
+import CalenderIcon from "../../Components/CalenderIcon";
 
 const Events: React.FC = () => {
   const instructors = useSelector((state: RootState) => state.instructors);
+  const eventCategories = useSelector(
+    (state: RootState) => state.eventCategories
+  );
+  const venues = useSelector((state: RootState) => state.venues);
   const events = useSelector((state: RootState) => state.events);
   const formatEventDate = (date: Date) =>
     `${date.getHours().toString().padStart(2, "0")}:` +
     `${date.getMinutes().toString().padStart(2, "0")}`;
-
   const dispatch = useDispatch();
 
   return (
     <div className="p-10">
+      <h2>Month: March</h2>
       {/* Event container */}
       {events.map((event) => (
         <div key={event.id} className="flex items-center border-t-1 py-4">
-          <div className="relative w-40 h-40 flex items-center justify-center">
-            <FaRegCalendar className="w-full h-full" />
-            <p className="absolute text-black text-6xl mt-7 font-bold">
-              {event.date.getDate()}
-            </p>
-          </div>
+          <CalenderIcon date={event.date} />
           {/* Text container for event */}
           <div className="flex pl-2 w-full items-center justify-between">
             <div className="flex flex-col space-y-1">
@@ -45,7 +43,7 @@ const Events: React.FC = () => {
                   {formatEventDate(event.date)}
                 </Link>
               </div>
-              <p>Location: {event.location}</p>
+              <p>Location: {venues[event.venueId].name}</p>
             </div>
             <div>
               <h2 className="font-bold">Instructors</h2>
@@ -57,7 +55,6 @@ const Events: React.FC = () => {
                 ))}
               </div>
             </div>
-
             <div>
               <Link href="#">View details</Link>
             </div>
