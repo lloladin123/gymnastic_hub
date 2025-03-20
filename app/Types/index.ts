@@ -1,2 +1,4 @@
 export * from "./instructorTypes";
-export * from "./eventTypes";
+export * from "./planningEvent";
+export * from "./venueTypes"
+export * from "./eventCategory"
