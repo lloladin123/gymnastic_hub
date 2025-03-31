@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { CheckListItem } from "./types";
+import { CheckListItem } from "../types";
 
 const initialCheckList: CheckListItem[] = [
   { id: 1, text: "send email", checked: false },

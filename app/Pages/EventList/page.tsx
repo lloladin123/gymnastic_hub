@@ -43,7 +43,7 @@ const Events: React.FC = () => {
                   {formatEventDate(event.date)}
                 </Link>
               </div>
-              <p>Location: {venues[event.venueId].name}</p>
+              <p>Location: {venues[event.venueId].address}</p>
             </div>
             <div>
               <h2 className="font-bold">Instructors</h2>

@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import instructorReducer from "./Slices/instructorSlice";
 import eventReducer from "./Slices/eventSlice";
-import venueReducer from "./Slices/VenueSlice"
+import venueReducer from "./Slices/venueSlice"
 import eventCategoryReducer from "./Slices/eventCategorySlice"
 
 export const store = configureStore({
