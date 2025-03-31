@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import React, { useState } from "react";
-import { NavItem } from "./types";
+import { NavItem } from "../types";
 
 const InitialNavLinks: NavItem[] = [
   {
