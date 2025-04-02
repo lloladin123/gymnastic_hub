@@ -3,6 +3,7 @@ import instructorReducer from "./Slices/instructorSlice";
 import eventReducer from "./Slices/eventSlice";
 import venueReducer from "./Slices/venueSlice"
 import eventCategoryReducer from "./Slices/eventCategorySlice"
+import teamReducer from "./Slices/teamSlice"
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     events: eventReducer,
     venues: venueReducer,
     eventCategories: eventCategoryReducer,
+    teams: teamReducer,
   },
 });
 

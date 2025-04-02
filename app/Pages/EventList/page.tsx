@@ -12,7 +12,7 @@ const Events: React.FC = () => {
     (state: RootState) => state.eventCategories
   );
   const venues = useSelector((state: RootState) => state.venues);
-  const events = useSelector((state: RootState) => state.events);
+  const events = useSelector((state: RootState) => state.events.events);
   const formatEventDate = (date: Date) =>
     `${date.getHours().toString().padStart(2, "0")}:` +
     `${date.getMinutes().toString().padStart(2, "0")}`;
