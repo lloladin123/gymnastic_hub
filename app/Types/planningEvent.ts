@@ -1,11 +1,11 @@
-import { Instructor } from "./instructorTypes";
 
 export interface PlanningEvent {
   id: number;
-  title: string;
-  instructors: Instructor[];
+  name: string;
+  teamId: number;
+  instructorsId: number[];
   categoryId: number;
   description: string;
-  date: Date;
+  date: number;
   venueId: number;
 }

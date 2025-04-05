@@ -1,12 +1,13 @@
 "use client";
 import React, { useRef, useState } from "react";
 import DropdownBox from "./DropdownBox";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DatePickerInput from "@/app/Components/Calender";
 import Link from "next/link";
-import { Instructor } from "../../Types/index";
+import { Instructor, PlanningEvent } from "../../Types/index";
 import InstructorList from "./InstructorList";
 import { RootState } from "../../Store/Store";
+import { addEvent } from "@/app/Store/Slices/eventSlice";
 
 const page: React.FC = () => {
   const eventCategories = useSelector(
@@ -14,6 +15,28 @@ const page: React.FC = () => {
   );
   const venues = useSelector((state: RootState) => state.venues);
   const teams = useSelector((state: RootState) => state.teams.teams);
+
+  const dispatch = useDispatch(); // Initialize dispatch
+
+  let currentEventId = 100;
+
+  // Dummy event data
+  const dummyEvent: PlanningEvent = {
+    id: currentEventId++, // Generate a unique ID (use a better method in production)
+    name: "Dummy Event", // Event name
+    teamId: 1, // Dummy team ID
+    instructorsId: [1, 2], // Dummy instructor IDs
+    categoryId: 1, // Dummy category ID
+    description: "This is a dummy event created for testing purposes.", // Event description
+    venueId: 1, // Dummy venue ID
+    date: new Date().getTime(),
+  };
+
+  // Function to dispatch the dummy event
+  const handleAddEvent = () => {
+    dispatch(addEvent(dummyEvent)); // Dispatch the addEvent action with the dummy event
+    console.log("Dummy event added:", dummyEvent); // Optionally log it
+  };
 
   return (
     <div className="flex items-center justify-center">
@@ -36,7 +59,11 @@ const page: React.FC = () => {
             placeholder="Event description"
           ></textarea>
         </div>
-        <Link className="p-2 text-white bg-gray-800 rounded-lg" href="#">
+        <Link
+          onClick={handleAddEvent}
+          className="p-2 text-white bg-gray-800 rounded-lg"
+          href="#"
+        >
           Add event
         </Link>
       </div>

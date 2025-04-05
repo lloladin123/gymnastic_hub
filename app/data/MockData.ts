@@ -27,47 +27,52 @@ export const mockTeamData: Team[] = [
 export const mockEventData: PlanningEvent[] = [
     {
       id: 1,
-      title: "Springmusene træning",
-      instructors: mockInstructorsData.slice(0,6),
+      name: "Springmusene træning",
+      instructorsId: [1, 2, 3, 4, 5, 6], // Use instructor IDs
       categoryId: 1,
       description: "bob",
-      date: new Date(),
+      teamId: 1,
       venueId: 1,
+      date: new Date().getTime(),
     },
     {
       id: 2,
-      title: "Supernovaer",
-      instructors: mockInstructorsData.slice(0,5),
+      name: "Supernovaer",
+      instructorsId: [1, 2, 3, 4, 5], // Use instructor IDs
       categoryId: 1,
       description: "bob",
-      date: new Date(),
+      teamId: 1,
       venueId: 1,
+      date: new Date().getTime(),
     },
     {
       id: 3,
-      title: "Stjerneskud",
-      instructors: mockInstructorsData.slice(0,4),
+      name: "Stjerneskud",
+      instructorsId: [1, 2, 3, 4], // Use instructor IDs
       categoryId: 1,
       description: "bob",
-      date: new Date(),
+      teamId: 1,
       venueId: 1,
+      date: new Date().getTime(),
     },
     {
       id: 4,
-      title: "Springmix",
-      instructors: mockInstructorsData.slice(0,3),
+      name: "Springmix",
+      instructorsId: [1, 2, 3], // Use instructor IDs
       categoryId: 1,
       description: "bob",
-      date: new Date(),
+      teamId: 1,
       venueId: 1,
+      date: new Date().getTime(),
     },
     {
       id: 5,
-      title: "Power Boys",
-      instructors: mockInstructorsData.slice(0,2),
+      name: "Power Boys",
+      instructorsId: [1, 2], // Use instructor IDs
       categoryId: 1,
       description: "bob",
-      date: new Date(),
+      teamId: 1,
       venueId: 1,
+      date: new Date().getTime(),
     },
   ];
