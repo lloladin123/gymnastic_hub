@@ -1,17 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Instructor } from "../../Types/index";
+import { mockInstructorsData } from "../../data/MockData";
+import { InstructorState } from "@/app/Types/stateTypes";
 
-const initialState: Instructor[] = [];
+
+const initialState: InstructorState = {
+  instructors: mockInstructorsData,
+};
 
 const instructorSlice = createSlice({
   name: "instructors",
   initialState,
   reducers: {
     setInstructors: (state, action: PayloadAction<Instructor[]>) => {
-      return action.payload;
+      state.instructors = action.payload;
     },
     addInstructor: (state, action: PayloadAction<Instructor>) => {
-      state.push(action.payload);
+      state.instructors.push(action.payload);
     },
   },
 });
