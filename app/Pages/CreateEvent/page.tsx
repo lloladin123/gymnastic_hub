@@ -17,10 +17,9 @@ const page: React.FC = () => {
   const teams = useSelector((state: RootState) => state.teams.teams);
 
   const dispatch = useDispatch(); // Initialize dispatch
-
   let currentEventId = 100;
 
-  // Dummy event data
+  // Dummy event data for quick testing
   const dummyEvent: PlanningEvent = {
     id: currentEventId++, // Generate a unique ID (use a better method in production)
     name: "Dummy Event", // Event name
