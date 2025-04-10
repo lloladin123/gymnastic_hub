@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Team } from "@/app/Types/team";
-import { mockTeamData } from "@/app/data/MockData";
 import { TeamState } from "@/app/Types/stateTypes";
+import { mockTeamData } from "../../data/MockData/index";
 
 // ✅ The state must be named `initialState`
 const initialState: TeamState = {

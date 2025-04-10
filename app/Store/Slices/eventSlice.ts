@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PlanningEvent } from "../../Types/index";
-import { mockEventData } from "@/app/data/MockData";
+import { mockEventData } from "@/app/data/MockData/index";
 import { EventState } from "@/app/Types/stateTypes";
 
 const initialState: EventState = {

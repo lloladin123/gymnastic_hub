@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Instructor } from "../../Types/index";
-import { mockInstructorsData } from "../../data/MockData";
+import { mockInstructorsData } from "../../data/MockData/index";
 import { InstructorState } from "@/app/Types/stateTypes";
 
 
