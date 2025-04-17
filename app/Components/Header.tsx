@@ -3,12 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Nav from "../Components/Nav";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-
-const auth = getAuth();
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../services/firebase";
+import { signOut } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const [user, setUser] = useState(auth.currentUser);
+  const router = useRouter();
 
   // Detect auth state
   useEffect(() => {
@@ -20,13 +22,19 @@ const Header = () => {
     return () => unsubscribe(); // clean up listener
   }, []);
 
+  const handleLogout = () => {
+    signOut(auth).then(() => router.push("/login"));
+  };
+
   return (
     <header className="px-10">
       <div className="flex justify-between items-center py-5">
         <h1 className="text-4xl">Gymnastic Instructor planning tool</h1>
         <div className="flex flex-row space-x-2 justify-between items-center">
           {auth.currentUser ? (
-            <Link href="/login">Logout</Link>
+            <Link href="" onClick={handleLogout}>
+              Logout
+            </Link>
           ) : (
             <Link href="/login">Login</Link>
           )}
