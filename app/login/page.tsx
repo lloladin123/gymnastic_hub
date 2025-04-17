@@ -19,15 +19,28 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <div className="h-100 mt-8 w-8/12 m-auto border-2 border-solid flex flex-col space-x-1 p-2 justify-center items-center">
       <h1>Login</h1>
-      <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-      <input
-        type="password"
-        placeholder="Password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleLogin}>Login</button>
+
+      <div className="p-4 space-y-2 border-2 border-solid flex flex-col">
+        <input
+          className="border-2 border-solid"
+          placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          className="border-2 border-solid"
+          type="password"
+          placeholder="Password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button
+          className="bg-gray-700 p-2 text-white rounded-xl"
+          onClick={handleLogin}
+        >
+          Login
+        </button>
+      </div>
     </div>
   );
 }
