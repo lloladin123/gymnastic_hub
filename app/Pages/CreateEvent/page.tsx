@@ -22,6 +22,7 @@ const page: React.FC = () => {
   // Dummy event data for quick testing
   const dummyEvent: PlanningEvent = {
     id: currentEventId++, // Generate a unique ID (use a better method in production)
+    creatorId: 1,
     name: "Dummy Event", // Event name
     teamId: 1, // Dummy team ID
     instructorsId: [1, 2], // Dummy instructor IDs
