@@ -15,6 +15,7 @@ const Events: React.FC = () => {
   );
   const venues = useSelector((state: RootState) => state.venues);
   const events = useSelector((state: RootState) => state.events.events);
+  const teams = useSelector((state: RootState) => state.teams.teams);
   const formatEventDate = (date: Date) =>
     `${date.getHours().toString().padStart(2, "0")}:` +
     `${date.getMinutes().toString().padStart(2, "0")}`;
@@ -30,7 +31,12 @@ const Events: React.FC = () => {
           {/* Text container for event */}
           <div className="flex pl-2 w-full items-center justify-between">
             <div className="flex flex-col space-y-1">
-              <p>Team: {event.name}</p>
+              <p>
+                Team:{" "}
+                {teams.find((team) => team.id === event.teamId)?.name ??
+                  "Unknown"}
+              </p>
+
               <div className="flex flex-row space-x-1 items-center">
                 <Link
                   className="bg-red-900 text-center text-white py-2 px-4 rounded-md"
@@ -45,7 +51,11 @@ const Events: React.FC = () => {
                   {formatEventDate(new Date(event.date))}
                 </Link>
               </div>
-              <p>Location: {venues[event.venueId].address}</p>
+              <p>
+                Location:{" "}
+                {venues.find((venue) => venue.id === event.venueId)?.address ??
+                  "Unknown"}
+              </p>
             </div>
             <div>
               <h2 className="font-bold">Instructors</h2>
