@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -14,8 +16,8 @@ const DatePickerInput: React.FC<DatePickerInputProps> = ({
   const [startDate, setStartDate] = useState<Date | null>(null);
 
   const handleChange = (date: Date | null) => {
-    setStartDate(date);
-    if (onDateChange) onDateChange(date);
+    setStartDate(date); // Keep the full Date object with both date and time
+    if (onDateChange) onDateChange(date); // Pass the full Date object to the parent
   };
 
   return (
@@ -26,7 +28,8 @@ const DatePickerInput: React.FC<DatePickerInputProps> = ({
       <DatePicker
         selected={startDate}
         onChange={handleChange}
-        dateFormat="yyyy/MM/dd"
+        dateFormat="DD/MM/YYYY HH:mm:"
+        showTimeSelect
         placeholderText="Select a date"
         isClearable
         showYearDropdown

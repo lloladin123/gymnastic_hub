@@ -5,7 +5,7 @@ import { Venue } from "./venue";
 export interface Team {
     id: number;
     name: string;
-    instructors: Instructor[];
+    instructorsId: number[];
     Members: Member[];
     venue: Venue;
 }

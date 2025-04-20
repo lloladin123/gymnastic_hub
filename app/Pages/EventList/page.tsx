@@ -17,6 +17,7 @@ const Events: React.FC = () => {
   const venues = useSelector((state: RootState) => state.venues);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editedEvent, setEditedEvent] = useState<Partial<PlanningEvent>>({});
+  const teams = useSelector((state: RootState) => state.teams.teams);
 
   const formatTime = (timestamp: number) => {
     const date = new Date(timestamp);
@@ -146,6 +147,54 @@ const Events: React.FC = () => {
                 >
                   Delete
                 </button>
+      <h2>Month: March</h2>
+      {/* Event container */}
+      {events.map((event) => (
+        <div key={event.id} className="flex items-center border-t-1 py-4">
+          <CalenderIcon date={new Date(event.date)} />
+          {/* Text container for event */}
+          <div className="flex pl-2 w-full items-center justify-between">
+            <div className="flex flex-col space-y-1">
+              <p>
+                Team:{" "}
+                {teams.find((team) => team.id === event.teamId)?.name ??
+                  "Unknown"}
+              </p>
+
+              <div className="flex flex-row space-x-1 items-center">
+                <Link
+                  className="bg-red-900 text-center text-white py-2 px-4 rounded-md"
+                  href=""
+                >
+                  Absent
+                </Link>
+                <Link
+                  className="bg-gray-800 text-center text-white py-2 px-4 rounded-md"
+                  href="#"
+                >
+                  {formatEventDate(new Date(event.date))}
+                </Link>
+              </div>
+              <p>
+                Location:{" "}
+                {venues.find((venue) => venue.id === event.venueId)?.address ??
+                  "Unknown"}
+              </p>
+            </div>
+            <div>
+              <h2 className="font-bold">Instructors</h2>
+              <div className="flex flex-wrap flex-col items-start h-30 space-x-2">
+                {event.instructorsId.map((instructorId) => {
+                  const instructor = instructors.find(
+                    (instructor) => instructor.id === instructorId
+                  );
+
+                  return (
+                    <p key={instructor?.id} className="h-10 min-w-max">
+                      {instructor ? instructor.name : "Unknown Instructor"}
+                    </p>
+                  );
+                })}
               </div>
             </div>
           </div>

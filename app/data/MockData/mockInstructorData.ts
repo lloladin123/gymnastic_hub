@@ -8,3 +8,5 @@ export const mockInstructorsData: Instructor[] = [
   { id: 5, name: "Agnes", email: "email@bob.dk", address: "address1", phone: 22949292, type: "Instructor" },
   { id: 6, name: "Liv", email: "email@bob.dk", address: "address1", phone: 22949292, type: "Instructor" },
 ];
+
+export const mockInstructorsId: number[] = mockInstructorsData.map((instructor) => instructor.id);
