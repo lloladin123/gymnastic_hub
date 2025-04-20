@@ -18,6 +18,8 @@ export const fetchEvents = createAsyncThunk<PlanningEvent[]>(
         setTimeout(() => resolve(mockEventData), 300); // simulate network delay
       });
     } else {
+      // 👇 Optional: also delay real API to simulate longer load time
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       const response = await axios.get(API_URL);
       return response.data;
     }
