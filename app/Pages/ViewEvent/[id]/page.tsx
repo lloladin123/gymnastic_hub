@@ -1,12 +1,13 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/Store/Store";
-import { fetchEventById } from "@/app/Store/Slices/eventSlice";
+import { deleteEvent, fetchEventById } from "@/app/Store/Slices/eventSlice";
 import Link from "next/link";
 import Spinner from "@/app/Components/Spinner";
+import ConfirmModal from "@/app/Components/ConfirmModual";
 
 const EventDetailsPage = () => {
   const { id } = useParams();
@@ -18,6 +19,8 @@ const EventDetailsPage = () => {
   const instructors = useSelector(
     (state: RootState) => state.instructors.instructors
   );
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -32,6 +35,12 @@ const EventDetailsPage = () => {
       </div>
     );
   }
+
+  const handleDelete = () => {
+    if (!event?.id) return;
+    dispatch(deleteEvent(event.id));
+    // Optional: redirect to list page after
+  };
 
   return (
     <div className="border-solid border-2 m-4 p-4 ">
@@ -67,9 +76,21 @@ const EventDetailsPage = () => {
         <Link className="p-2 rounded-xl bg-red-800 text-white" href="">
           Edit
         </Link>
-        <Link className="p-2 rounded-xl bg-orange-400 text-white" href="">
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+            setShowDeleteModal(true);
+          }}
+          className="p-2 rounded-xl bg-orange-400 text-white"
+          href=""
+        >
           Delete
         </Link>
+        <ConfirmModal
+          show={showDeleteModal}
+          onClose={() => setShowDeleteModal(false)}
+          onConfirm={handleDelete}
+        />
       </div>
     </div>
   );

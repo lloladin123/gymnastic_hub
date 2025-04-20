@@ -35,6 +35,22 @@ export const fetchEventById = createAsyncThunk<PlanningEvent, number>(
   }
 );
 
+export const deleteEvent = createAsyncThunk<number, number>(
+  "events/deleteEvent",
+  async (id) => {
+    if (USE_MOCK_DATA) {
+      console.log(`⚠️ Mock delete for event ${id}`);
+      return new Promise<number>((resolve) =>
+        setTimeout(() => resolve(id), 300)
+      );
+    } else {
+      await axios.delete(`${API_URL}/${id}`);
+      return id; // Return the deleted ID so we can remove it from Redux state
+    }
+  }
+);
+
+
 type PlanningEventDTO = Omit<PlanningEvent, "date"> & { date: string };
 
 export const createEvent = createAsyncThunk<
@@ -90,6 +106,12 @@ const eventSlice = createSlice({
       })
       .addCase(fetchEventById.fulfilled, (state, action) => {
         state.selectedEvent = action.payload; // ✅ no error now
+      })
+      .addCase(deleteEvent.fulfilled, (state, action) => {
+        state.events = state.events.filter((event) => event.id !== action.payload);
+        if (state.selectedEvent?.id === action.payload) {
+          state.selectedEvent = null;
+        }
       });      
       
   },
