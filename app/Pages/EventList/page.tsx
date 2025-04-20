@@ -1,12 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../Store/Store";
+import { AppDispatch, RootState } from "../../Store/Store";
 import CalenderIcon from "../../Components/CalenderIcon";
+import { fetchEvents } from "../../Store/Slices/eventSlice"; // Import fetchEvents action
 
 const Events: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const instructors = useSelector(
     (state: RootState) => state.instructors.instructors
   );
@@ -14,11 +17,16 @@ const Events: React.FC = () => {
     (state: RootState) => state.eventCategories
   );
   const venues = useSelector((state: RootState) => state.venues);
-  const events = useSelector((state: RootState) => state.events.events);
+  const events = useSelector((state: RootState) => state.events.events); // Get events from Redux
+  const teams = useSelector((state: RootState) => state.teams.teams);
+
   const formatEventDate = (date: Date) =>
     `${date.getHours().toString().padStart(2, "0")}:` +
     `${date.getMinutes().toString().padStart(2, "0")}`;
-  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchEvents()); // Dispatch the action to fetch data when the component mounts
+  }, [dispatch]);
 
   return (
     <div className="p-10">
