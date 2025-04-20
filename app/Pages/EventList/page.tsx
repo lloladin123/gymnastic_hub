@@ -11,9 +11,7 @@ import Spinner from "@/app/Components/Spinner";
 const Events: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const instructors = useSelector(
-    (state: RootState) => state.instructors.instructors
-  );
+  const instructors = useSelector((state: RootState) => state.instructors);
   const eventCategories = useSelector(
     (state: RootState) => state.eventCategories
   );
@@ -85,7 +83,7 @@ const Events: React.FC = () => {
                 <h2 className="font-bold">Instructors</h2>
                 <div className="flex flex-wrap flex-col items-start h-30 space-x-2">
                   {event.instructorsId.map((instructorId) => {
-                    const instructor = instructors.find(
+                    const instructor = instructors.instructors.find(
                       (i) => i.id === instructorId
                     );
                     return (
@@ -97,7 +95,7 @@ const Events: React.FC = () => {
                 </div>
               </div>
               <div>
-                <Link href="#">View details</Link>
+                <Link href={`/Pages/ViewEvent/${event.id}`}>View details</Link>
               </div>
             </div>
           </div>

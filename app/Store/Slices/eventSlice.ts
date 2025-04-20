@@ -25,6 +25,16 @@ export const fetchEvents = createAsyncThunk<PlanningEvent[]>(
     }
   }
 );
+
+export const fetchEventById = createAsyncThunk<PlanningEvent, number>(
+  "events/fetchById",
+  async (id) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const response = await axios.get(`${API_URL}/${id}`);
+    return response.data;
+  }
+);
+
 type PlanningEventDTO = Omit<PlanningEvent, "date"> & { date: string };
 
 export const createEvent = createAsyncThunk<
@@ -50,14 +60,11 @@ export const createEvent = createAsyncThunk<
   }
 );
 
-
-
-
-
 const initialState: EventState = {
   events: [],
   status: "idle", // You can track loading states like 'idle', 'loading', 'succeeded', 'failed'
   error: null,
+  selectedEvent: null
 };
 
 const eventSlice = createSlice({
@@ -80,7 +87,11 @@ const eventSlice = createSlice({
       .addCase(fetchEvents.rejected, (state, action) => {
         state.status = "failed";  // Set failed state if API call fails
         state.error = action.error.message ?? null;
-      });
+      })
+      .addCase(fetchEventById.fulfilled, (state, action) => {
+        state.selectedEvent = action.payload; // ✅ no error now
+      });      
+      
   },
 });
 
