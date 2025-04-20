@@ -23,6 +23,34 @@ export const fetchEvents = createAsyncThunk<PlanningEvent[]>(
     }
   }
 );
+type PlanningEventDTO = Omit<PlanningEvent, "date"> & { date: string };
+
+export const createEvent = createAsyncThunk<
+  PlanningEvent,         // return type (comes back as normal PlanningEvent)
+  PlanningEvent          // input type (your UI still uses timestamps)
+>(
+  "events/createEvent",
+  async (newEvent) => {
+    const formattedEvent: PlanningEventDTO = {
+      ...newEvent,
+      date: new Date(newEvent.date).toISOString(), // format for backend
+    };
+
+    if (USE_MOCK_DATA) {
+      console.log("⚠️ Mock mode: Simulating event creation");
+      return new Promise<PlanningEvent>((resolve) => {
+        setTimeout(() => resolve({ ...newEvent, id: Date.now() }), 300); // use original timestamp for mock
+      });
+    } else {
+      const response = await axios.post(API_URL, formattedEvent);
+      return response.data;
+    }
+  }
+);
+
+
+
+
 
 const initialState: EventState = {
   events: [],

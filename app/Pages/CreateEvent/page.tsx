@@ -6,8 +6,8 @@ import DatePickerInput from "@/app/Components/Calender";
 import Link from "next/link";
 import { PlanningEvent } from "../../Types/index";
 import InstructorList from "./InstructorList";
-import { RootState } from "../../Store/Store";
-import { addEvent } from "@/app/Store/Slices/eventSlice";
+import { AppDispatch, RootState } from "../../Store/Store";
+import { addEvent, createEvent } from "@/app/Store/Slices/eventSlice";
 import { createEmptyEvent } from "@/app/Utils/Helpers/eventHelpers";
 
 const page: React.FC = () => {
@@ -27,12 +27,13 @@ const page: React.FC = () => {
     });
   };
 
-  const dispatch = useDispatch(); // Initialize dispatch
+  const dispatch: AppDispatch = useDispatch();
   const selectedTeam = teams.find((team) => team.id === event.teamId);
 
   // Function to dispatch the dummy event
   const handleAddEvent = () => {
-    dispatch(addEvent(event)); // Dispatch the addEvent action with the dummy event
+    dispatch(createEvent(event)); // ✅ Posts to API and updates store on success
+    // Dispatch the addEvent action with the dummy event
     console.log("Dummy event added:", event); // Optionally log it
   };
 
