@@ -5,70 +5,152 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../Store/Store";
 import CalenderIcon from "../../Components/CalenderIcon";
+import { deleteEvent, updateEvent } from "@/app/Store/Slices/eventSlice";
+import { PlanningEvent } from "@/app/Types/index";
 
 const Events: React.FC = () => {
+  const dispatch = useDispatch();
+  const events = useSelector((state: RootState) => state.events.events);
   const instructors = useSelector(
     (state: RootState) => state.instructors.instructors
   );
-  const eventCategories = useSelector(
-    (state: RootState) => state.eventCategories
-  );
   const venues = useSelector((state: RootState) => state.venues);
-  const events = useSelector((state: RootState) => state.events.events);
-  const formatEventDate = (date: Date) =>
-    `${date.getHours().toString().padStart(2, "0")}:` +
-    `${date.getMinutes().toString().padStart(2, "0")}`;
-  const dispatch = useDispatch();
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editedEvent, setEditedEvent] = useState<Partial<PlanningEvent>>({});
+
+  const formatTime = (timestamp: number) => {
+    const date = new Date(timestamp);
+    return `${date.getHours().toString().padStart(2, "0")}:${date
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
+  const handleEditClick = (event: PlanningEvent) => {
+    setEditingId(event.id);
+    setEditedEvent({ ...event });
+  };
+
+  const handleSave = () => {
+    if (editingId && editedEvent) {
+      dispatch(updateEvent({ id: editingId, updatedEvent: editedEvent }));
+      setEditingId(null);
+      setEditedEvent({});
+    }
+  };
+
+  const handleDelete = (id: number) => {
+    dispatch(deleteEvent(id));
+  };
 
   return (
     <div className="p-10">
-      <h2>Month: March</h2>
-      {/* Event container */}
-      {events.map((event) => (
-        <div key={event.id} className="flex items-center border-t-1 py-4">
-          <CalenderIcon date={new Date(event.date)} />
-          {/* Text container for event */}
-          <div className="flex pl-2 w-full items-center justify-between">
-            <div className="flex flex-col space-y-1">
-              <p>Team: {event.name}</p>
-              <div className="flex flex-row space-x-1 items-center">
-                <Link
-                  className="bg-red-900 text-center text-white py-2 px-4 rounded-md"
-                  href=""
+      <h2>Events</h2>
+      {events.map((event) => {
+        const isEditing = editingId === event.id;
+        const venue = venues[event.venueId];
+        return (
+          <div key={event.id} className="border-t py-4 flex gap-4 items-start">
+            <CalenderIcon date={new Date(event.date)} />
+            <div className="flex flex-col w-full space-y-2">
+              {isEditing ? (
+                <>
+                  <input
+                    value={editedEvent.name || ""}
+                    onChange={(e) =>
+                      setEditedEvent({ ...editedEvent, name: e.target.value })
+                    }
+                    className="border p-1"
+                  />
+                  <input
+                    type="datetime-local"
+                    onChange={(e) =>
+                      setEditedEvent({
+                        ...editedEvent,
+                        date: new Date(e.target.value).getTime(),
+                      })
+                    }
+                    className="border p-1"
+                  />
+                  <input
+                    type="number"
+                    value={editedEvent.venueId || ""}
+                    onChange={(e) =>
+                      setEditedEvent({
+                        ...editedEvent,
+                        venueId: parseInt(e.target.value),
+                      })
+                    }
+                    className="border p-1"
+                    placeholder="Venue ID"
+                  />
+                  <input
+                    type="text"
+                    value={(editedEvent.instructorsId || []).join(",")}
+                    onChange={(e) =>
+                      setEditedEvent({
+                        ...editedEvent,
+                        instructorsId: e.target.value
+                          .split(",")
+                          .map((id) => parseInt(id.trim())),
+                      })
+                    }
+                    className="border p-1"
+                    placeholder="Instructors (comma-separated IDs)"
+                  />
+                  <button
+                    className="bg-green-700 text-white p-2 rounded"
+                    onClick={handleSave}
+                  >
+                    Save
+                  </button>
+                </>
+              ) : (
+                <>
+                  <p>
+                    <strong>Team:</strong> {event.name}
+                  </p>
+                  <p>
+                    <strong>Time:</strong> {formatTime(event.date)}
+                  </p>
+                  <p>
+                    <strong>Location:</strong> {venue?.address || "Unknown"}
+                  </p>
+                  <div>
+                    <strong>Instructors:</strong>
+                    <ul>
+                      {event.instructorsId.map((id) => {
+                        const instructor = instructors.find((i) => i.id === id);
+                        return (
+                          <li key={id}>
+                            {instructor?.name || "Unknown Instructor"}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                </>
+              )}
+              <div className="flex space-x-2">
+                {!isEditing && (
+                  <button
+                    className="bg-blue-700 text-white px-3 py-1 rounded"
+                    onClick={() => handleEditClick(event)}
+                  >
+                    Edit
+                  </button>
+                )}
+                <button
+                  className="bg-red-700 text-white px-3 py-1 rounded"
+                  onClick={() => handleDelete(event.id)}
                 >
-                  Absent
-                </Link>
-                <Link
-                  className="bg-gray-800 text-center text-white py-2 px-4 rounded-md"
-                  href="#"
-                >
-                  {formatEventDate(new Date(event.date))}
-                </Link>
+                  Delete
+                </button>
               </div>
-              <p>Location: {venues[event.venueId].address}</p>
-            </div>
-            <div>
-              <h2 className="font-bold">Instructors</h2>
-              <div className="flex flex-wrap flex-col items-start h-30 space-x-2">
-                {event.instructorsId.map((instructorId) => {
-                  const instructor = instructors.find(
-                    (instructor) => instructor.id === instructorId
-                  );
-
-                  return (
-                    <p key={instructor?.id} className="h-10 min-w-max">
-                      {instructor ? instructor.name : "Unknown Instructor"}
-                    </p>
-                  );
-                })}
-              </div>
-            </div>
-            <div>
-              <Link href="#">View details</Link>
             </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };
