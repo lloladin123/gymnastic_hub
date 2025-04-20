@@ -1,6 +1,7 @@
 
 export interface PlanningEvent {
   id: number;
+  creatorId: number;
   name: string;
   teamId: number;
   instructorsId: number[];
@@ -9,3 +10,5 @@ export interface PlanningEvent {
   date: number;
   venueId: number;
 }
+
+

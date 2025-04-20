@@ -1,15 +1,33 @@
 "use client";
 import Link from "next/link";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Instructor } from "../../Types/index";
 import DropdownBox from "./DropdownBox";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/Store";
 
-const InstructorList = () => {
+interface InstructorListProps {
+  onChange?: (instructorIds: number[]) => void;
+  selectedIds?: number[];
+}
+
+const InstructorList: React.FC<InstructorListProps> = ({
+  onChange,
+  selectedIds,
+}) => {
   const instructors = useSelector(
     (state: RootState) => state.instructors.instructors
   );
+
+  useEffect(() => {
+    if (selectedIds) {
+      const selectedInstructors = instructors.filter((inst) =>
+        selectedIds.includes(inst.id)
+      );
+      eventInstructors.current = selectedInstructors;
+      setRender((r) => !r); // re-render
+    }
+  }, [selectedIds, instructors]);
 
   const eventInstructors = useRef<Instructor[]>([]);
   const [render, setRender] = useState(false);
@@ -22,6 +40,7 @@ const InstructorList = () => {
       (instructor) => instructor.id !== id
     );
     setRender(!render);
+    onChange?.(eventInstructors.current.map((i) => i.id));
   };
 
   const addInstructorToEvent = () => {
@@ -47,6 +66,7 @@ const InstructorList = () => {
       eventInstructors.current.push(selectedInstructor); // Add to persistent list
       // console.log("Event Instructors Array:", eventInstructors.current); // Logs the current array
       setRender(!render); // Force re-render to reflect the new list
+      onChange?.(eventInstructors.current.map((i) => i.id));
     }
   };
 
@@ -56,8 +76,15 @@ const InstructorList = () => {
         <DropdownBox
           labelkey="name"
           options={instructors}
-          onChange={(id: number) => setSelectedInstructorId(id)}
-        ></DropdownBox>
+          onChange={(selected) => {
+            if (typeof selected === "number") {
+              setSelectedInstructorId(selected);
+            } else {
+              setSelectedInstructorId(selected.id); // if returnObject is true
+            }
+          }}
+        />
+
         <Link
           className="p-2 text-white bg-gray-800 rounded-lg flex items-center justify-center"
           href="#"

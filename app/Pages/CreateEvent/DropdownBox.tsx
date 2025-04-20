@@ -10,13 +10,15 @@ interface OptionWithId {
 interface DropdownBoxProps<T extends OptionWithId> {
   options: T[];
   labelkey: keyof T;
-  onChange?: (selectedId: number) => void;
+  onChange?: (selectedId: number | T) => void;
+  returnObject?: boolean;
 }
 
 const DropdownBox = <T extends OptionWithId>({
   options,
   labelkey,
   onChange,
+  returnObject = false,
 }: DropdownBoxProps<T>) => {
   // Check if options is an array before attempting to map
   if (!Array.isArray(options)) {
@@ -30,13 +32,23 @@ const DropdownBox = <T extends OptionWithId>({
       <div className="flex flex-col">
         <label>{labelkey.toLocaleString()}</label>
         <select
+          defaultValue=""
           onChange={(e) => {
             const selectedValue = Number(e.target.value);
-            if (onChange && !isNaN(selectedValue)) onChange(selectedValue);
+            const selectedItem = options.find(
+              (item) => item.id === selectedValue
+            );
+
+            if (onChange && selectedItem) {
+              onChange(returnObject ? selectedItem : selectedValue);
+            }
           }}
         >
+          <option value="" disabled>
+            Vælg...
+          </option>
           {options.map((item, index) => (
-            <option value={(item as any).id} key={index}>
+            <option value={(item as any).id} key={item.id}>
               {String(item[labelkey])}
             </option>
           ))}
