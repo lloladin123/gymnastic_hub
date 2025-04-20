@@ -7,6 +7,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../services/firebase";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { USE_MOCK_DATA } from "../config";
 
 const Header = () => {
   const [user, setUser] = useState(auth.currentUser);
@@ -29,7 +30,11 @@ const Header = () => {
   return (
     <header className="px-10">
       <div className="flex justify-between items-center py-5">
-        <h1 className="text-4xl">Gymnastic Instructor planning tool</h1>
+        <h1 className="text-4xl">
+          Gymnastic Instructor Planning Tool
+          {USE_MOCK_DATA ? " (Mock Data)" : "(Api Data)"}
+        </h1>
+
         <div className="flex flex-row space-x-2 justify-between items-center">
           {auth.currentUser ? (
             <Link href="" onClick={handleLogout}>
