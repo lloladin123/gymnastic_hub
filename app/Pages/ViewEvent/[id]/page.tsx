@@ -8,6 +8,8 @@ import { deleteEvent, fetchEventById } from "@/app/Store/Slices/eventSlice";
 import Link from "next/link";
 import Spinner from "@/app/Components/Spinner";
 import ConfirmModal from "@/app/Components/ConfirmModual";
+import DatePickerInput from "@/app/Components/DatePickerInput";
+import { PlanningEvent } from "@/app/Types/planningEvent";
 
 const EventDetailsPage = () => {
   const { id } = useParams();
@@ -28,6 +30,16 @@ const EventDetailsPage = () => {
     }
   }, [dispatch, id]);
 
+  const [editableEvent, setEditableEvent] = useState<PlanningEvent | null>(
+    null
+  );
+
+  useEffect(() => {
+    if (event) {
+      setEditableEvent({ ...event });
+    }
+  }, [event]);
+
   if (status === "loading" || !event) {
     return (
       <div className="p-10 text-gray-600">
@@ -35,6 +47,13 @@ const EventDetailsPage = () => {
       </div>
     );
   }
+
+  const updateEventField = (key: keyof PlanningEvent, value: any) => {
+    setEditableEvent((prev) => {
+      if (!prev) return prev; // Just in case
+      return { ...prev, [key]: value } as PlanningEvent;
+    });
+  };
 
   const handleDelete = () => {
     if (!event?.id) return;
@@ -56,8 +75,15 @@ const EventDetailsPage = () => {
             Venue:{" "}
             {venues.find((v) => v.id === event.venueId)?.address ?? "Unknown"}
           </p>
+          {editableEvent && (
+            <DatePickerInput
+              selected={new Date(editableEvent.date)}
+              onDateChange={(date) =>
+                updateEventField("date", date?.getTime() ?? editableEvent.date)
+              }
+            />
+          )}
 
-          <p>Date: {new Date(event.date).toLocaleString()}</p>
           <p>Description: {event.description}</p>
         </div>
         <div className="flex flex-col p-2 space-y-1">
@@ -73,7 +99,7 @@ const EventDetailsPage = () => {
         </div>
       </div>
       <div className="mt-2 flex flex-row space-x-2">
-        <Link className="p-2 rounded-xl bg-red-800 text-white" href="">
+        <Link className="p-2 rounded-xl bg-orange-400 text-white" href="">
           Edit
         </Link>
         <Link
@@ -81,7 +107,7 @@ const EventDetailsPage = () => {
             e.preventDefault();
             setShowDeleteModal(true);
           }}
-          className="p-2 rounded-xl bg-orange-400 text-white"
+          className="p-2 rounded-xl bg-red-800 text-white"
           href=""
         >
           Delete

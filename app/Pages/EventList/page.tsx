@@ -7,6 +7,7 @@ import { AppDispatch, RootState } from "../../Store/Store";
 import CalenderIcon from "../../Components/CalenderIcon";
 import { fetchEvents } from "../../Store/Slices/eventSlice";
 import Spinner from "@/app/Components/Spinner";
+import TimeBox from "@/app/Components/TimeBox";
 
 const Events: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,10 +21,6 @@ const Events: React.FC = () => {
   const teams = useSelector((state: RootState) => state.teams.teams);
   const status = useSelector((state: RootState) => state.events.status);
   const error = useSelector((state: RootState) => state.events.error);
-
-  const formatEventDate = (date: Date) =>
-    `${date.getHours().toString().padStart(2, "0")}:` +
-    `${date.getMinutes().toString().padStart(2, "0")}`;
 
   useEffect(() => {
     dispatch(fetchEvents());
@@ -66,12 +63,7 @@ const Events: React.FC = () => {
                   >
                     Absent
                   </Link>
-                  <Link
-                    className="bg-gray-800 text-center text-white py-2 px-4 rounded-md"
-                    href="#"
-                  >
-                    {formatEventDate(new Date(event.date))}
-                  </Link>
+                  <TimeBox date={event.date} />
                 </div>
                 <p>
                   Location:{" "}

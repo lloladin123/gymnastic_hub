@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import DropdownBox from "./DropdownBox";
 import { useDispatch, useSelector } from "react-redux";
-import DatePickerInput from "@/app/Components/Calender";
+import DatePickerInput from "@/app/Components/DatePickerInput";
 import Link from "next/link";
 import { PlanningEvent } from "../../Types/index";
 import InstructorList from "./InstructorList";

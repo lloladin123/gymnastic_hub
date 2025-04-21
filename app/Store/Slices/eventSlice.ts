@@ -50,6 +50,28 @@ export const deleteEvent = createAsyncThunk<number, number>(
   }
 );
 
+export const updateEvent = createAsyncThunk<
+  PlanningEvent, // return type
+  { id: number; updatedEvent: Partial<PlanningEvent> } // input
+>(
+  "events/updateEvent",
+  async ({ id, updatedEvent }) => {
+    if (USE_MOCK_DATA) {
+      console.log(`⚠️ Mock updating event ${id}`);
+      return new Promise<PlanningEvent>((resolve) =>
+        setTimeout(() => resolve({ id, ...updatedEvent } as PlanningEvent), 300)
+      );
+    } else {
+      const response = await axios.put(`${API_URL}/${id}`, {
+        id,
+        ...updatedEvent,
+        date: new Date(updatedEvent.date!).toISOString(), // convert timestamp to ISO string
+      });
+      return response.data;
+    }
+  }
+);
+
 
 type PlanningEventDTO = Omit<PlanningEvent, "date"> & { date: string };
 
@@ -112,8 +134,18 @@ const eventSlice = createSlice({
         if (state.selectedEvent?.id === action.payload) {
           state.selectedEvent = null;
         }
-      });      
-      
+      })
+      .addCase(updateEvent.fulfilled, (state, action) => {
+        // Update event in list
+        const index = state.events.findIndex((e) => e.id === action.payload.id);
+        if (index !== -1) {
+          state.events[index] = action.payload;
+        }
+        // Also update selected event if we're viewing it
+        if (state.selectedEvent?.id === action.payload.id) {
+          state.selectedEvent = action.payload;
+        }
+      });
   },
 });
 
